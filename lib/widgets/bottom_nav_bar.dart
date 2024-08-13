@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:stay_jigy/data/model/nav_button_data.dart';
 import 'package:stay_jigy/pages/home/home_page.dart';
-import 'package:stay_jigy/pages/profile/profile_page.dart';
+import 'package:stay_jigy/pages/profile/profile_pagee.dart';
 import 'package:stay_jigy/pages/report/reports_page.dart';
 import 'package:stay_jigy/shared/color.dart';
 import 'package:stay_jigy/shared/route.dart';
