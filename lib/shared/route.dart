@@ -126,6 +126,7 @@ import 'package:stay_jigy/pages/home/complete_page.dart';
 import 'package:stay_jigy/pages/home/exercise_details_page.dart';
 import 'package:stay_jigy/pages/home/home_page.dart';
 import 'package:stay_jigy/pages/home/ready_page.dart';
+import 'package:stay_jigy/pages/report/history_page.dart';
 import 'package:stay_jigy/widgets/bottom_nav_bar.dart';
 import 'package:stay_jigy/pages/home/view_all_exercise.dart';
 
@@ -164,15 +165,16 @@ class RouteGenerator {
           ),
         );
 
-              case '/CompletePage':
+      case '/CompletePage':
         CompletPageArguments level = arguments as CompletPageArguments;
         return createRoute(
           child: CompletePage(
             arg: level,
           ),
         );
-
-
+        
+      case '/HistoryPage':
+        return createRoute(child: const HistoryPage());
 
       default:
         return _errorRoute(); // Call _errorRoute() directly since it's static
