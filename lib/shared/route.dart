@@ -122,6 +122,7 @@ import 'package:flutter/material.dart';
 import 'package:stay_jigy/data/model/event.dart';
 import 'package:stay_jigy/data/model/exercise_model.dart';
 import 'package:stay_jigy/data/model/level_model.dart';
+import 'package:stay_jigy/pages/home/complete_page.dart';
 import 'package:stay_jigy/pages/home/exercise_details_page.dart';
 import 'package:stay_jigy/pages/home/home_page.dart';
 import 'package:stay_jigy/pages/home/ready_page.dart';
@@ -155,15 +156,23 @@ class RouteGenerator {
           ),
         );
 
-             case '/ReadyPage':
-       WorkoutArguments w = arguments as WorkoutArguments;
+      case '/ReadyPage':
+        WorkoutArguments w = arguments as WorkoutArguments;
         return createRoute(
           child: ReadyPage(
             w: w,
-            // level: w.level,
-            // duration: w.duration,
           ),
         );
+
+              case '/CompletePage':
+        CompletPageArguments level = arguments as CompletPageArguments;
+        return createRoute(
+          child: CompletePage(
+            arg: level,
+          ),
+        );
+
+
 
       default:
         return _errorRoute(); // Call _errorRoute() directly since it's static

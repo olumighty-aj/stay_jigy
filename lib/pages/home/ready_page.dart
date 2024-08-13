@@ -1,16 +1,4 @@
 import 'dart:async';
-import 'package:ex_app/Core/color.dart';
-import 'package:ex_app/Core/route.dart';
-import 'package:ex_app/Core/size/size_config.dart';
-import 'package:ex_app/Core/space.dart';
-import 'package:ex_app/data/database/app_db.dart';
-import 'package:ex_app/data/model/event.dart';
-import 'package:ex_app/data/model/report.dart';
-import 'package:ex_app/pages/home/widgets/workout_timer.dart';
-import 'package:ex_app/pages/home/widgets/reset_timer.dart';
-import 'package:ex_app/pages/home/widgets/total_timer.dart';
-import 'package:ex_app/widgets/custom_circle_button.dart';
-import 'package:ex_app/widgets/dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:stay_jigy/data/database/app_db.dart';
 import 'package:stay_jigy/data/model/event.dart';
@@ -22,6 +10,7 @@ import 'package:stay_jigy/pages/home/widgets/workout_timer.dart';
 import 'package:stay_jigy/shared/color.dart';
 import 'package:stay_jigy/shared/route.dart';
 import 'package:stay_jigy/shared/size/size_config.dart';
+import 'package:stay_jigy/widgets/custom_circle_button.dart';
 
 class ReadyPage extends StatefulWidget {
   final WorkoutArguments w;
@@ -154,7 +143,7 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
             children: [
               Column(
                 children: [
-                  h30,
+                  const SizedBox(height: 30,),
                   Text(
                     widget.w.level.exercise[position].name,
                     style: TextStyle(
@@ -164,7 +153,7 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                       letterSpacing: 0.7,
                     ),
                   ),
-                  h10,
+                  const SizedBox(height: 10,),
                   Text(
                     position < 9 && widget.w.level.exercise.length < 9
                         ? '0${position + 1} of 0${widget.w.level.exercise.length}'
@@ -176,7 +165,7 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                       fontSize: 3.5 * SizeConfig.text!,
                     ),
                   ),
-                  h20,
+                  const SizedBox(height: 20,),
                   Expanded(
                     child: Stack(
                       children: [
@@ -186,20 +175,25 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                           height: double.infinity,
                           fit: BoxFit.cover,
                         ),
+
+                        if(isPause || count != 0)
                         Container(
-                          color: isPause == true || count != 0
-                              ? white.withOpacity(0.5)
-                              : Colors.transparent,
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              if (isPause == true || count != 0)
-                // ? count == 4
-                // ? const SizedBox()
-                Center(
+                          color: white.withOpacity(0.5),
+                        ),
+                        if(isPause)
+                         Center(
+                      child: Text(
+                        'Pause',
+                        style: TextStyle(
+                          color: red,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.7,
+                          fontSize: 8 * SizeConfig.text!,
+                        ),
+                      ),
+                    )
+                    else if(count != 0)
+                    Center(
                   child: Text(
                     'Get Ready',
                     style: TextStyle(
@@ -210,6 +204,16 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                     ),
                   ),
                 )
+
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              
+                // ? count == 4
+                // ? const SizedBox()
+                
               // : count == 0
               //     ? const SizedBox()
               //     : Center(
@@ -224,20 +228,7 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
               //         ),
               //       ),
               // : const SizedBox(),
-              ,
-              isPause
-                  ? Center(
-                      child: Text(
-                        'Pause',
-                        style: TextStyle(
-                          color: red,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.7,
-                          fontSize: 8 * SizeConfig.text!,
-                        ),
-                      ),
-                    )
-                  : const SizedBox(),
+             
             ],
           );
         },

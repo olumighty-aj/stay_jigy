@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:stay_jigy/shared/size/size_config.dart';
 
 const SizedBox h5 = SizedBox(height: 5.0);
 const SizedBox h10 = SizedBox(height: 10.0);

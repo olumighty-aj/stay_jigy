@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stay_jigy/shared/color.dart';
 import 'dart:async';
 
+import 'package:stay_jigy/shared/route.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -10,17 +12,30 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  bool _navigated = false;
   @override
-  void initState() {
-    Timer(const Duration(seconds: 3), () {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        '/HomePage',
-        (route) => false,
-      );
-    });
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_navigated) {
+      _navigated = true;
+      Timer(const Duration(seconds: 3), () {
+        _navigateToBottomNavBar();
+      });
+    }
   }
 
+  void  _navigateToBottomNavBar(){
+    try {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/BottomNavBar',
+        (route) => false,
+        arguments: ScreenArguments(0, false), 
+      );
+    } catch (e) {
+      print("Navigation error: $e");
+    }
+   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
