@@ -7,8 +7,7 @@ import 'package:stay_jigy/widgets/custom_circle_button.dart';
 
 class ExerciseDetailsPage extends StatelessWidget {
   final Exercise exercise;
-  const ExerciseDetailsPage({Key? key, required this.exercise})
-      : super(key: key);
+  const ExerciseDetailsPage({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {

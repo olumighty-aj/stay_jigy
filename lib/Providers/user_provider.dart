@@ -8,23 +8,29 @@ part 'user_provider.g.dart';
 class UserNotifier extends _$UserNotifier {
   @override
   Future<User> build() async {
-    return ExerciseDatabase.instance.user();
+    final db = await ExerciseDatabase.instance;
+    return db.user();
   }
 
   Future<void> updateUser(String field, String value) async {
-    await ExerciseDatabase.instance.updateUser(field, value);
+    final db = await ExerciseDatabase.instance;
+    await db.updateUser(field, value);
     ref.invalidateSelf();
   }
 
   Future<void> resetUser() async {
-    await ExerciseDatabase.instance.resetUser();
+    final db = await ExerciseDatabase.instance;
+    await db.resetUser();
     ref.invalidateSelf();
   }
 
   Future<void> calculateBMI() async {
-    final currentUser = await ExerciseDatabase.instance.user();
-    if (currentUser.weight != null && currentUser.weight!.isNotEmpty &&
-        currentUser.height != null && currentUser.height!.isNotEmpty) {
+   final db = await ExerciseDatabase.instance;
+final currentUser = await db.user();
+    if (currentUser.weight != null &&
+        currentUser.weight!.isNotEmpty &&
+        currentUser.height != null &&
+        currentUser.height!.isNotEmpty) {
       double weightValue = double.parse(currentUser.weight!);
       double heightValue = double.parse(currentUser.height!);
       double bmi = (weightValue / (heightValue * heightValue)) * 10000;

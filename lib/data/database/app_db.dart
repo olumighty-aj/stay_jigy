@@ -1,5 +1,6 @@
-
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
 import 'package:stay_jigy/data/model/event.dart';
 import 'package:stay_jigy/data/model/report.dart';
@@ -7,14 +8,20 @@ import 'package:stay_jigy/data/model/user.dart';
 import '../model/alarm.dart';
 
 class ExerciseDatabase {
-  static final ExerciseDatabase instance = ExerciseDatabase._();
-  late Database database;
-  ExerciseDatabase._() {
-    init();
+  static ExerciseDatabase? _instance;
+  static Future<ExerciseDatabase> get instance async {
+    if (_instance == null) {
+      _instance = ExerciseDatabase._();
+      await _instance!.init();
+    }
+    return _instance!;
   }
-  init() async {
+
+  ExerciseDatabase._();
+  late Database database;
+
+  Future<void> init() async {
     database = await _initDB('exercise.db');
-    return database;
   }
 
   Future<Database> _initDB(String filePath) async {
@@ -23,6 +30,12 @@ class ExerciseDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
+ Future<T> _withDatabase<T>(Future<T> Function(Database db) operation) async {
+    if (!database.isOpen) {
+      await init();
+    }
+    return operation(database);
+  }
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
@@ -42,29 +55,24 @@ class ExerciseDatabase {
         'CREATE TABLE events (_id $idType, eventKey $textType, kcal $textType, duration $textType, title $textType,  time $textType)');
   }
 
-  Future<void> insertArlam(Alarm remind) async {
-    final db = database;
-    await db.insert('arlam', remind.toMap());
-  }
+Future<void> insertArlam(Alarm remind) async {
+  await _withDatabase((db) => db.insert('arlam', remind.toMap()));
+}
 
-  Future<void> insertRepeat(RepateAlarm alarm) async {
-    final db = database;
-    await db.insert('week', alarm.toMap());
-  }
+Future<void> insertRepeat(RepateAlarm alarm) async {
+  await _withDatabase((db) => db.insert('week', alarm.toMap()));
+}
 
-  Future<void> insertReport(Reports reports) async {
-    final db = database;
-    await db.insert('report', reports.toMap());
-  }
+Future<void> insertReport(Reports reports) async {
+  await _withDatabase((db) => db.insert('report', reports.toMap()));
+}
 
-  Future<void> insertEvents(Event event) async {
-    final db = database;
-    await db.insert('events', event.toMap());
-  }
+Future<void> insertEvents(Event event) async {
+  await _withDatabase((db) => db.insert('events', event.toMap()));
+}
 
-  Future<List<RepateAlarm>> readArlam(String id) async {
-    final db = database;
-
+Future<List<RepateAlarm>> readArlam(String id) async {
+  return await _withDatabase((db) async {
     final result = await db.query(
       'week',
       columns: ['_id', 'week', 'weekID', 'setOrder'],
@@ -72,11 +80,11 @@ class ExerciseDatabase {
       whereArgs: [id],
     );
     return result.map((json) => RepateAlarm.fromJson(json)).toList();
-  }
+  });
+}
 
-  Future<List<Event>> showEvents(String key) async {
-    final db = database;
-
+Future<List<Event>> showEvents(String key) async {
+  return await _withDatabase((db) async {
     final result = await db.query(
       'events',
       columns: ['_id', 'eventKey', 'kcal', 'duration', 'title', 'time'],
@@ -84,24 +92,23 @@ class ExerciseDatabase {
       whereArgs: [key],
     );
     return result.map((json) => Event.fromJson(json)).toList();
-  }
+  });
+}
 
-  Future<List<Event>> showBetweenEvents(String strat, String end) async {
-    final db = database;
-
+Future<List<Event>> showBetweenEvents(String start, String end) async {
+  return await _withDatabase((db) async {
     final result = await db.query(
       'events',
       columns: ['_id', 'eventKey', 'kcal', 'duration', 'title', 'time'],
-      where: 'eventKey BETWEEN  ? and ?',
-      whereArgs: [strat, end],
+      where: 'eventKey BETWEEN ? and ?',
+      whereArgs: [start, end],
     );
     return result.map((json) => Event.fromJson(json)).toList();
-  }
+  });
+}
 
-//WHERE column_4 BETWEEN 10 AND 20;
-  Future<List<Reports>> showHistory(String id) async {
-    final db = database;
-
+Future<List<Reports>> showHistory(String id) async {
+  return await _withDatabase((db) async {
     final result = await db.query(
       'report',
       columns: ['_id', 'workouts', 'eventKey', 'kcal', 'duration', 'time'],
@@ -109,23 +116,20 @@ class ExerciseDatabase {
       whereArgs: [id],
     );
     return result.map((json) => Reports.fromJson(json)).toList();
-  }
+  });
+}
 
-  Future<void> updateWeekAlarm(RepateAlarm value) async {
-    final db = database;
-    await db.update(
-      'week',
+Future<void> updateWeekAlarm(RepateAlarm value) async {
+  await _withDatabase((db) => db.update(
+    'week',
+    {'week': value},
+    where: 'weekID = ?',
+    whereArgs: [value.weekID],
+  ));
+}
 
-      {'week': value},
-      // user.toMap(),
-      where: 'weekID = ?',
-      whereArgs: [value.weekID],
-    );
-  }
-
-  Future<User> user() async {
-    final db = database;
-
+ Future<User> user() async {
+  return await _withDatabase((db) async {
     final maps = await db.query(
       'user',
       columns: ['_id', 'name', 'gender', 'weight', 'height', 'bmi', 'birth'],
@@ -144,9 +148,9 @@ class ExerciseDatabase {
           birth: '');
       await db.insert('user', user.toMap());
       return user;
-      // throw Exception('ID 0 not found');
     }
-  }
+  });
+}
 
   Future<void> updateUser(String column, String value) async {
     final db = database;

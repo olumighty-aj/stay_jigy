@@ -51,7 +51,7 @@ class _NamePickerState extends State<NamePicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-             SizedBox(height: 20,),
+             const SizedBox(height: 20,),
             Text(
               'Enter your name in the box below for recognized yourself.',
               textAlign: TextAlign.center,
@@ -61,7 +61,7 @@ class _NamePickerState extends State<NamePicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-             SizedBox(height: 20,),
+             const SizedBox(height: 20,),
             Container(
               height: 6 * SizeConfig.height!,
               width: 35 * SizeConfig.height!,
@@ -98,7 +98,7 @@ class _NamePickerState extends State<NamePicker> {
                 ),
               ),
             ),
-             SizedBox(height: 30,),
+             const SizedBox(height: 30,),
             DialogBoxButton(
               onTap: () {
                 // setState(() {

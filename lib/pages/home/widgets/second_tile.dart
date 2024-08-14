@@ -5,7 +5,7 @@ import 'package:stay_jigy/shared/size/size_config.dart';
 
 class ExtraExerciseTile extends StatelessWidget {
   final Levels level;
-  const ExtraExerciseTile({Key? key, required this.level}) : super(key: key);
+  const ExtraExerciseTile({super.key, required this.level});
 
   @override
   Widget build(BuildContext context) {

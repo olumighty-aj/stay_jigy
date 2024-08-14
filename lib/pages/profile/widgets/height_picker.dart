@@ -58,7 +58,7 @@ class _HeightPickerState extends State<HeightPicker> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               Text(
                 'Please select your height it is also used for BMI calculations.',
                 textAlign: TextAlign.center,
@@ -68,7 +68,7 @@ class _HeightPickerState extends State<HeightPicker> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               SizedBox(
                 height: 10 * SizeConfig.height!,
                 width: 28 * SizeConfig.height!,
@@ -108,7 +108,7 @@ class _HeightPickerState extends State<HeightPicker> {
                         },
                       ),
                     ),
-                     SizedBox(width: 20,),
+                     const SizedBox(width: 20,),
                     Container(
                       width: 12 * SizeConfig.height!,
                       height: 6 * SizeConfig.height!,
@@ -133,7 +133,7 @@ class _HeightPickerState extends State<HeightPicker> {
                   ],
                 ),
               ),
-               SizedBox(height: 30,),
+               const SizedBox(height: 30,),
               DialogBoxButton(
                 onTap: () {
                   //  if (isInitialValue) {

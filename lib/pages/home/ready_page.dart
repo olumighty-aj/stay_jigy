@@ -16,7 +16,7 @@ class ReadyPage extends StatefulWidget {
   final WorkoutArguments w;
   // final Levels level;
   // final int duration;
-  const ReadyPage({Key? key, required this.w}) : super(key: key);
+  const ReadyPage({super.key, required this.w});
 
   @override
   State<ReadyPage> createState() => _ReadyPageState();
@@ -143,7 +143,9 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
             children: [
               Column(
                 children: [
-                  const SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Text(
                     widget.w.level.exercise[position].name,
                     style: TextStyle(
@@ -153,7 +155,9 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                       letterSpacing: 0.7,
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Text(
                     position < 9 && widget.w.level.exercise.length < 9
                         ? '0${position + 1} of 0${widget.w.level.exercise.length}'
@@ -165,7 +169,9 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                       fontSize: 3.5 * SizeConfig.text!,
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Expanded(
                     child: Stack(
                       children: [
@@ -175,45 +181,43 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                           height: double.infinity,
                           fit: BoxFit.cover,
                         ),
-
-                        if(isPause || count != 0)
-                        Container(
-                          color: white.withOpacity(0.5),
-                        ),
-                        if(isPause)
-                         Center(
-                      child: Text(
-                        'Pause',
-                        style: TextStyle(
-                          color: red,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.7,
-                          fontSize: 8 * SizeConfig.text!,
-                        ),
-                      ),
-                    )
-                    else if(count != 0)
-                    Center(
-                  child: Text(
-                    'Get Ready',
-                    style: TextStyle(
-                      color: red,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.7,
-                      fontSize: 8 * SizeConfig.text!,
-                    ),
-                  ),
-                )
-
+                        if (isPause || count != 0)
+                          Container(
+                            color: white.withOpacity(0.5),
+                          ),
+                        if (isPause)
+                          Center(
+                            child: Text(
+                              'Pause',
+                              style: TextStyle(
+                                color: red,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.7,
+                                fontSize: 8 * SizeConfig.text!,
+                              ),
+                            ),
+                          )
+                        else if (count != 0)
+                          Center(
+                            child: Text(
+                              'Get Ready',
+                              style: TextStyle(
+                                color: red,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.7,
+                                fontSize: 8 * SizeConfig.text!,
+                              ),
+                            ),
+                          )
                       ],
                     ),
                   )
                 ],
               ),
-              
-                // ? count == 4
-                // ? const SizedBox()
-                
+
+              // ? count == 4
+              // ? const SizedBox()
+
               // : count == 0
               //     ? const SizedBox()
               //     : Center(
@@ -228,7 +232,6 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
               //         ),
               //       ),
               // : const SizedBox(),
-             
             ],
           );
         },
@@ -304,12 +307,6 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                             vertical: 1 * SizeConfig.height!),
                         child: workOutStart
                             ? CustomWorkOutTimer(
-                                child: SizedBox(
-                                  height: 10 * SizeConfig.height!,
-                                  width: 10 * SizeConfig.height!,
-                                  //This is a small circle
-                                  child: smallcircletimer(),
-                                ),
                                 controller: workoutTimer,
                                 duration: widget
                                     .w.level.exercise[selectIndex].duration,
@@ -327,15 +324,15 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                                 progressTextStyle:
                                     const TextStyle(color: blue, fontSize: 45),
                                 strokeWidth: 8,
-                              )
-                            : CustomTimer(
-                                duration: Duration(seconds: widget.w.duration),
                                 child: SizedBox(
                                   height: 10 * SizeConfig.height!,
                                   width: 10 * SizeConfig.height!,
                                   //This is a small circle
                                   child: smallcircletimer(),
                                 ),
+                              )
+                            : CustomTimer(
+                                duration: Duration(seconds: widget.w.duration),
                                 controller: restTimer,
                                 timerStyle: TimerStyle.ring,
                                 onStart: handleTimerOnStart,
@@ -351,6 +348,12 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
                                   fontSize: 50,
                                 ),
                                 strokeWidth: 8,
+                                child: SizedBox(
+                                  height: 10 * SizeConfig.height!,
+                                  width: 10 * SizeConfig.height!,
+                                  //This is a small circle
+                                  child: smallcircletimer(),
+                                ),
                               ),
                       )
                     : Container(
@@ -531,29 +534,34 @@ class _ReadyPageState extends State<ReadyPage> with TickerProviderStateMixin {
     }
   }
 
-  void saveDataTodatabase() {
-    var now = DateTime.now();
-    var data = Reports(
-        kcal: totCalerios.toStringAsFixed(1),
-        duration: skipTotTime.toString(),
-        workouts: widget.w.level.exercise.length.toString(),
-        time: now,
-        eventKey: '${now.year}${now.month}${now.day}');
-    var event = Event(
-      eventKey: '${now.year}${now.month}${now.day}',
-      kcal: totCalerios.toStringAsFixed(1),
-      duration: skipTotTime.toString(),
-      title: widget.w.level.title,
-      dateTime: now,
-    );
-    ExerciseDatabase.instance.insertReport(data);
-    ExerciseDatabase.instance.insertEvents(event);
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      '/CompletePage',
-      (route) => false,
-      arguments: CompletPageArguments(widget.w.level, event),
-    );
-  }
+void saveDataTodatabase() async {
+  var now = DateTime.now();
+  var data = Reports(
+    kcal: totCalerios.toStringAsFixed(1),
+    duration: skipTotTime.toString(),
+    workouts: widget.w.level.exercise.length.toString(),
+    time: now,
+    eventKey: '${now.year}${now.month}${now.day}',
+  );
+  var event = Event(
+    eventKey: '${now.year}${now.month}${now.day}',
+    kcal: totCalerios.toStringAsFixed(1),
+    duration: skipTotTime.toString(),
+    title: widget.w.level.title,
+    dateTime: now,
+  );
+
+  // Await the instance and then call the methods
+  final db = await ExerciseDatabase.instance;
+  await db.insertReport(data);
+  await db.insertEvents(event);
+
+  Navigator.of(context).pushNamedAndRemoveUntil(
+    '/CompletePage',
+    (route) => false,
+    arguments: CompletPageArguments(widget.w.level, event),
+  );
+}
 
   @override
   void dispose() {

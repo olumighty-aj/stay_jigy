@@ -7,7 +7,7 @@ import 'package:stay_jigy/widgets/custom_round_btn.dart';
 
 class CompletePage extends StatelessWidget {
   final CompletPageArguments arg;
-  const CompletePage({Key? key, required this.arg}) : super(key: key);
+  const CompletePage({super.key, required this.arg});
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +74,10 @@ class CompletePage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Image.asset('assets/icons/trophy.PNG',
                     height: 23 * SizeConfig.height!),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -96,7 +96,7 @@ class CompletePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Text(
                           'Calories Burned',
                           style: TextStyle(
@@ -108,7 +108,7 @@ class CompletePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(width: 30,),
+                    const SizedBox(width: 30,),
                     Column(
                       children: [
                         CircleAvatar(
@@ -124,7 +124,7 @@ class CompletePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Text(
                           time,
                           style: TextStyle(
@@ -138,7 +138,7 @@ class CompletePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 CustomRoundBtn(
                     onTap: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
@@ -148,7 +148,7 @@ class CompletePage extends StatelessWidget {
                       );
                     },
                     text: 'Complete'),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
               ],
             ),
           )

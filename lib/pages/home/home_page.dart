@@ -1,54 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stay_jigy/Providers/user_provider.dart';
 import 'package:stay_jigy/data/model/level_model.dart';
 import 'package:stay_jigy/pages/home/widgets/main_tile.dart';
 import 'package:stay_jigy/pages/home/widgets/second_tile.dart';
 import 'package:stay_jigy/shared/color.dart';
 import 'package:stay_jigy/shared/size/size_config.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget  {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-     final constraints = BoxConstraints(
+  Widget build(BuildContext context, WidgetRef ref ) {
+    final userAsyncValue = ref.watch(userNotifierProvider);
+    final constraints = BoxConstraints(
       maxWidth: MediaQuery.of(context).size.width,
       maxHeight: MediaQuery.of(context).size.height,
     );
 
-     SizeConfig().init(constraints, MediaQuery.of(context).orientation);
+    SizeConfig().init(constraints, MediaQuery.of(context).orientation);
 
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(18 * (SizeConfig.height?? 1)),
+          preferredSize: Size.fromHeight(18 * (SizeConfig.height ?? 1)),
           child: Container(
-            height: 10 * (SizeConfig.height?? 1),
+            height: 10 * (SizeConfig.height ?? 1),
             padding: EdgeInsets.only(
               top: 2 * (SizeConfig.height ?? 1),
-              left: 1.5 * (SizeConfig.height?? 1),
-              bottom: 2 * (SizeConfig.height?? 1),
-
+              left: 1.5 * (SizeConfig.height ?? 1),
+              bottom: 2 * (SizeConfig.height ?? 1),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Welcome Back!',
+                userAsyncValue.when(
+                  loading: () => Text(
+                    'Loading...',
+                    style: TextStyle(
+                      fontSize: 2 * (SizeConfig.text ?? 1),
+                      letterSpacing: 1.1,
+                      color: black.withOpacity(0.8),
+                    ),
+                  ),
+                   error: (error, stack) => Text(
+                    'Error loading name',
+                    style: TextStyle(
+                      fontSize: 2 * (SizeConfig.text ?? 1),
+                      letterSpacing: 1.1,
+                      color: black.withOpacity(0.8),
+                    ),
+                  ),
+                  data: (user) => Text(
+                  'Welcome Back!, ${user?.name ?? 'User'}!',
                   style: TextStyle(
-                    fontSize: 2 * (SizeConfig.text?? 1),
+                    fontSize: 2 * (SizeConfig.text ?? 1),
                     letterSpacing: 1.1,
                     color: black.withOpacity(0.8),
+                    fontWeight: FontWeight.w900
                   ),
+                ),
                 ),
                 Text(
                   "Don't Miss the Fitness!",
                   style: TextStyle(
-                    fontSize: 2 * (SizeConfig.text?? 1),
+                    fontSize: 2 * (SizeConfig.text ?? 1),
                     letterSpacing: 1.1,
                     color: black.withOpacity(0.8),
                   ),
@@ -59,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Padding(
           padding: EdgeInsets.only(
-            left: 1.5 * (SizeConfig.height?? 1),
+            left: 1.5 * (SizeConfig.height ?? 1),
             bottom: 3 * (SizeConfig.height ?? 1),
           ),
           child: Column(
@@ -74,7 +89,9 @@ class _HomePageState extends State<HomePage> {
                   color: black.withOpacity(0.8),
                 ),
               ),
-              SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               SizedBox(
                 height: 37 * (SizeConfig.height ?? 1),
                 child: ListView.builder(
@@ -87,7 +104,9 @@ class _HomePageState extends State<HomePage> {
                       );
                     }),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Text(
                 'Extra Exercise',
                 style: TextStyle(
@@ -97,7 +116,9 @@ class _HomePageState extends State<HomePage> {
                   color: black.withOpacity(0.8),
                 ),
               ),
-              SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               ExtraExerciseTile(
                 level: levels[levels.length - 1],
               ),

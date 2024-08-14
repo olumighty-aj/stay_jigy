@@ -9,11 +9,11 @@ class AppDialog extends StatelessWidget {
 
   final Function() onContinue;
   const AppDialog({
-    Key? key,
+    super.key,
     this.title,
     this.subTitle,
     required this.onContinue,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class AppDialog extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -52,7 +52,7 @@ class AppDialog extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             DialogBoxButton(

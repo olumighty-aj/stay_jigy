@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class CustomTimer extends StatefulWidget {
   const CustomTimer({
-    Key? key,
+    super.key,
     required this.duration,
     this.child,
     this.onStart,
@@ -31,8 +31,7 @@ class CustomTimer extends StatefulWidget {
         assert(status == null || controller == null,
             "Both Controller and Status have been set; Please set either the controller (TimerController) or the status (TimerStatus) - only one should be set"),
         assert(displayProgressIndicator || displayProgressText,
-            "At least either displayProgressText or displayProgressIndicator must be set to True"),
-        super(key: key);
+            "At least either displayProgressText or displayProgressIndicator must be set to True");
 
   /// The length of time for this timer.
   final Duration duration;

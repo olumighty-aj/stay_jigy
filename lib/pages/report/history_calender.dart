@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:stay_jigy/data/database/app_db.dart';
 import 'package:stay_jigy/data/model/report.dart';
@@ -12,7 +13,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../data/model/event.dart';
 
 class HistoryCalender extends StatefulWidget {
-  const HistoryCalender({Key? key}) : super(key: key);
+  const HistoryCalender({super.key});
 
   @override
   _HistoryCalenderState createState() => _HistoryCalenderState();
@@ -43,13 +44,13 @@ class _HistoryCalenderState extends State<HistoryCalender> {
   }
 
   Future showData() async {
-    history = await ExerciseDatabase.instance.showReports();
+    final db = await ExerciseDatabase.instance; 
+    history = await db.showReports();
 
     if (history.isNotEmpty) {
       for (int i = 0; history.length > i; i++) {
         var date = history[i].time;
-        events = await ExerciseDatabase.instance
-            .showEvents('${date.year}${date.month}${date.day}');
+        events = await db.showEvents('${date.year}${date.month}${date.day}');
         setState(() {
           _kEventSource2[DateTime.utc(date.year, date.month, date.day)] = [
             for (int k = 0; events.length > k; k++)
@@ -68,7 +69,8 @@ class _HistoryCalenderState extends State<HistoryCalender> {
   }
 
   Future getWeekData(strat, end) async {
-    weekEvents = await ExerciseDatabase.instance.showBetweenEvents(strat, end);
+     final db = await ExerciseDatabase.instance;
+    weekEvents = await db.showBetweenEvents(strat, end);
   }
 
   @override
@@ -165,7 +167,7 @@ class _HistoryCalenderState extends State<HistoryCalender> {
             _focusedDay = focusedDay;
           },
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Expanded(
           child: ValueListenableBuilder<List<Event>>(
             valueListenable: _selectedEvents,
@@ -185,7 +187,7 @@ class _HistoryCalenderState extends State<HistoryCalender> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
                         Text(
                           '-',
                           style: TextStyle(
@@ -193,7 +195,7 @@ class _HistoryCalenderState extends State<HistoryCalender> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
                         Text(
                           "${monthSet(_focusedDay.month)} ${_focusedDay.day.toString()}",
                           style: TextStyle(
@@ -303,7 +305,7 @@ class _HistoryCalenderState extends State<HistoryCalender> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             Text(
               event.title,
               style: TextStyle(
@@ -322,15 +324,15 @@ class _HistoryCalenderState extends State<HistoryCalender> {
               height: 2 * SizeConfig.height!,
               color: orange,
             ),
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
             Text(newtime),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             Image.asset(
               'assets/icons/time.png',
               height: 2.5 * SizeConfig.height!,
               color: blue,
             ),
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
             Text('${event.kcal} Kcal'),
           ],
         ),
@@ -342,11 +344,12 @@ class _HistoryCalenderState extends State<HistoryCalender> {
                   return AppDialog(
                     title: 'Delete',
                     subTitle: 'Are you sure you want to delete it?',
-                    onContinue: () {
+                    onContinue: () async {
+                       final db = await ExerciseDatabase.instance;
                       setState(() => events.removeAt(index));
-                      ExerciseDatabase.instance.deleteEvents(event.id!);
+                      await db.deleteEvents(event.id!);
 
-                      showData();
+                     await  showData();
 
                       Navigator.pop(context);
                     },

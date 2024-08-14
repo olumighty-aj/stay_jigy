@@ -44,7 +44,7 @@ class _GenderPickerState extends State<GenderPicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-             SizedBox(height: 20,),
+             const SizedBox(height: 20,),
             Text(
               'Select your gender below to recognize yourself.',
               textAlign: TextAlign.center,
@@ -54,7 +54,7 @@ class _GenderPickerState extends State<GenderPicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-             SizedBox(height: 20,),
+             const SizedBox(height: 20,),
             ListTile(
               title: const Text('Male'),
               leading: Radio(
@@ -75,7 +75,7 @@ class _GenderPickerState extends State<GenderPicker> {
                     selectedGender(value!, 'Female');
                   }),
             ),
-             SizedBox(height: 30,),
+             const SizedBox(height: 30,),
             DialogBoxButton(
               onTap: () {
                 widget.gender(genderN);

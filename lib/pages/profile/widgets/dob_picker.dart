@@ -6,7 +6,7 @@ import 'package:stay_jigy/shared/size/size_config.dart';
 
 class DOBPicker extends StatefulWidget {
   final Function(String) dob;
-  const DOBPicker({Key? key, required this.dob}) : super(key: key);
+  const DOBPicker({super.key, required this.dob});
 
   @override
   State<DOBPicker> createState() => _DOBPickerState();
@@ -39,7 +39,7 @@ class _DOBPickerState extends State<DOBPicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -51,7 +51,7 @@ class _DOBPickerState extends State<DOBPicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SizedBox(
@@ -124,7 +124,7 @@ class _DOBPickerState extends State<DOBPicker> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   SizedBox(
@@ -163,7 +163,7 @@ class _DOBPickerState extends State<DOBPicker> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             DialogBoxButton(

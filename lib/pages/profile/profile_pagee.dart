@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stay_jigy/Providers/user_provider.dart';
-import 'package:stay_jigy/data/database/app_db.dart';
 import 'package:stay_jigy/pages/home/widgets/dialog_box.dart';
 import 'package:stay_jigy/pages/profile/widgets/dob_picker.dart';
 import 'package:stay_jigy/pages/profile/widgets/gender_picker.dart';
@@ -55,7 +54,7 @@ class ProfilePage extends ConsumerWidget {
                     settingsTile(
                       'Name',
                       'name',
-                      user!.name?.isNotEmpty == true ? user.name! : '0.0',
+                      user.name?.isNotEmpty == true ? user.name! : '0.0',
                       () {
                         showDialog(
                             context: context,

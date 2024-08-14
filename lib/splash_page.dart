@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
       _navigated = true;
       Timer(const Duration(seconds: 3), () {
         _navigateToBottomNavBar();
-      });
+      }); 
     }
   }
 

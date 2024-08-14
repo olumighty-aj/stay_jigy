@@ -6,7 +6,7 @@ import 'package:stay_jigy/shared/color.dart';
 import 'package:stay_jigy/shared/size/size_config.dart';
 
 class ReportsPage extends StatefulWidget {
-  const ReportsPage({Key? key}) : super(key: key);
+  const ReportsPage({super.key});
 
   @override
   State<ReportsPage> createState() => _ReportsPageState();
@@ -26,13 +26,15 @@ class _ReportsPageState extends State<ReportsPage> {
   }
 
   Future showData() async {
-    reports = await ExerciseDatabase.instance.showReports();
+     final db = await ExerciseDatabase.instance;
+    reports = await db.showReports();
 
     calculateData();
     if (mounted) setState(() {});
   }
 
   void calculateData() async {
+     final db = await ExerciseDatabase.instance;
     for (int i = 0; i < reports.length; i++) {
       totWorkout = totWorkout + int.parse(reports[i].workouts);
       totKacl = totKacl + double.parse(reports[i].kcal);
@@ -40,7 +42,7 @@ class _ReportsPageState extends State<ReportsPage> {
       var date =
           '${reports[i].time.year}${reports[i].time.month}${reports[i].time.day}';
 
-      history = await ExerciseDatabase.instance.showHistory(date);
+      history = await db.showHistory(date);
     }
 
     setState(() {
@@ -196,7 +198,7 @@ class _ReportsPageState extends State<ReportsPage> {
             height: 2.6 * SizeConfig.height!,
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Text(
           name,
           style: TextStyle(
@@ -206,7 +208,7 @@ class _ReportsPageState extends State<ReportsPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-       SizedBox(height: 10,),
+       const SizedBox(height: 10,),
         Text(
           data,
           style: TextStyle(
@@ -216,7 +218,7 @@ class _ReportsPageState extends State<ReportsPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-       SizedBox(height: 10,),
+       const SizedBox(height: 10,),
         (exte != null)
             ? Text(
                 exte,
@@ -257,7 +259,7 @@ class _ReportsPageState extends State<ReportsPage> {
     return Column(
       children: [
         Text(dayName),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Container(
           height: 40.0,
           width: 40.0,

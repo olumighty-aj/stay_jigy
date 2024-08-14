@@ -6,7 +6,7 @@ import 'package:stay_jigy/shared/size/size_config.dart';
 
 class WeightPicker extends StatefulWidget {
   final Function(String) weight;
-  const WeightPicker({Key? key, required this.weight}) : super(key: key);
+  const WeightPicker({super.key, required this.weight});
 
   @override
   State<WeightPicker> createState() => _WeightPickerState();
@@ -38,7 +38,7 @@ class _WeightPickerState extends State<WeightPicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -50,7 +50,7 @@ class _WeightPickerState extends State<WeightPicker> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SizedBox(
@@ -91,7 +91,7 @@ class _WeightPickerState extends State<WeightPicker> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
@@ -103,7 +103,7 @@ class _WeightPickerState extends State<WeightPicker> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   SizedBox(
@@ -137,7 +137,7 @@ class _WeightPickerState extends State<WeightPicker> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Container(
@@ -164,7 +164,7 @@ class _WeightPickerState extends State<WeightPicker> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             DialogBoxButton(

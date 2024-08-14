@@ -37,7 +37,9 @@ class _WeekDaysPickerState extends State<WeekDaysPicker> {
   }
 
   void getData() async {
-    getSelect = await ExerciseDatabase.instance.readArlam(widget.weekId);
+     final db = await ExerciseDatabase.instance;
+
+    getSelect = await db.readArlam(widget.weekId);
     if (mounted) {}
     for (int k = 0; k < getSelect.length; k++) {
       setState(() {
@@ -73,7 +75,7 @@ class _WeekDaysPickerState extends State<WeekDaysPicker> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Text(
                 'Please select days it used to repeat reminders.',
                 textAlign: TextAlign.center,
@@ -83,7 +85,7 @@ class _WeekDaysPickerState extends State<WeekDaysPicker> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-               SizedBox(height: 20,),
+               const SizedBox(height: 20,),
               SizedBox(
                 height: 50 * SizeConfig.height!,
                 child: ListView(
@@ -119,11 +121,12 @@ class _WeekDaysPickerState extends State<WeekDaysPicker> {
                   }).toList(),
                 ),
               ),
-               SizedBox(height: 30,),
+               const SizedBox(height: 30,),
               DialogBoxButton(
-                onTap: () {
+                onTap: () async{
+                   final db = await ExerciseDatabase.instance;
                   if (widget.isUpdate == true) {
-                    ExerciseDatabase.instance.deleteRepeat(widget.weekId);
+                    await db.deleteRepeat(widget.weekId);
                   }
 
                   for (int i = 0; i < selectedItems.length; i++) {
@@ -132,7 +135,7 @@ class _WeekDaysPickerState extends State<WeekDaysPicker> {
                       week: selectedItems[i],
                       weekID: widget.weekId,
                     );
-                    ExerciseDatabase.instance.insertRepeat(insertRepeat);
+                   await db.insertRepeat(insertRepeat);
                   }
                   Navigator.pop(context);
                 },

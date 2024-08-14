@@ -5,7 +5,7 @@ import 'package:stay_jigy/shared/size/size_config.dart';
 
 class MainExerciseTile extends StatelessWidget {
   final Levels level;
-  const MainExerciseTile({Key? key, required this.level}) : super(key: key);
+  const MainExerciseTile({super.key, required this.level});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,7 @@ class MainExerciseTile extends StatelessWidget {
                 ),
               ),
             ),
+            // ignore: prefer_const_constructors
             SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -62,7 +63,7 @@ class MainExerciseTile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text(
