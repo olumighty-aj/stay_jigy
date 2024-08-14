@@ -12,6 +12,16 @@ class HomePage extends ConsumerWidget  {
 
   Widget build(BuildContext context, WidgetRef ref ) {
     final userAsyncValue = ref.watch(userNotifierProvider);
+    final DateTime now = DateTime.now();
+    String greeting;
+
+      if (now.hour < 12) {
+      greeting = 'Good Morning';
+    } else if (now.hour < 17) {
+      greeting = 'Good Afternoon';
+    } else {
+      greeting = 'Good Evening';
+    }
     final constraints = BoxConstraints(
       maxWidth: MediaQuery.of(context).size.width,
       maxHeight: MediaQuery.of(context).size.height,
@@ -51,7 +61,7 @@ class HomePage extends ConsumerWidget  {
                     ),
                   ),
                   data: (user) => Text(
-                  'Welcome Back!, ${user?.name ?? 'User'}!',
+                  '$greeting, ${user?.name ?? 'User'}!',
                   style: TextStyle(
                     fontSize: 2 * (SizeConfig.text ?? 1),
                     letterSpacing: 1.1,
